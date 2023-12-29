@@ -326,9 +326,97 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+// var http = require('http');
+// var url = require('url');
+
+// var address = "https://localhost:8080/aboutus.html?name=geetansh&email=jaingeetansh&dob=15-01-04";
+// var parse = url.parse(address,true);
+
+// var obj = parse.query;
+
+// http.createServer((req,res)=>{
+//     res.end("Hello from the server");
+
+//     console.log("hostname: ",parse.hostname);  // localhost
+//     console.log("host: ",parse.host);  // localhost:8080
+//     console.log("pathname: ",parse.pathname); ///aboutus.html
+//     console.log("search: ",parse.search); // ?name=geetansh&email=jaingeetansh&dob=15-01-04
+
+//     console.log(obj.email); // jaingeetansh
+//     console.log(obj.name); // geetansh
+
+// }).listen(3000);
+
+
+
+
+
+
+
+// var http = require('http');
+// var url = require('url');
+
+// var address = "https://tcsglobal.udemy.com/course/nodejs-express-mongodb-bootcamp/learn/lecture/15080928#overview";
+// var parse = url.parse(address,true);
+
+// var obj = parse.query;
+
+// http.createServer((req,res)=>{
+//     res.end("Hello from the server");
+
+//     console.log("hostname: ",parse.hostname);  // tcsglobal.udemy.com
+//     console.log("host: ",parse.host);  // localhost:tcsglobal.udemy.com
+//     console.log("pathname: ",parse.pathname); // course/nodejs-express-mongodb-bootcamp/learn/lecture/15080928
+//     console.log("search: ",parse.search); // null
+
+
+// }).listen(3000);
+
+
+
+
+
+
+
+
+
+
+
+
 var http = require('http');
+var url = require('url');
+var fs = require('fs');
+
+
 
 http.createServer((req,res)=>{
-    console.log(req);
-    res.end("Hello from server");
+    res.end("Hello from the server");
+
+    const pathName = req.url;
+
+    if(pathName == '/overview'){
+        console.log("This is Overview");
+    }
+
+    else if(pathName === '/api'){
+        // fs.readFile(`${__dirname}/data.json`,'utf-8',(err,data)=>{
+        //     if(err) console.log(err);
+        //     const parseData = JSON.parse(data);
+        //     res.writeHead(200,{'Content-type':'application/json'});
+        //     res.write(data);
+        // })
+    }
+
 }).listen(3000);
