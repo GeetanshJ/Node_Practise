@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .waiting {
+            color: white;
+        }
+
+        .done {
+            color: #a2c62c;
+            text-decoration: line-through;
+        }
+
+        .check {
+            display: none;
+        }
+
+        .card {
+            display: flex;
+            background-color: #575757;
+            height: 500px;
+            width: 500px;
+            border-radius: 50px;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .show {
+            padding: 0;
+            border: none;
+            background: none;
+            float: right;
+        }
+
+        .pass {
+            padding: 0;
+            border: none;
+            background: none;
+            outline: none;
+        }
+
+        .pass:focus {
+            outline: none;
+        }
+
+        .passArea {
+            background-color: white;
+            height: 20px;
+            width: 100%;
+            padding: 6px;
+            border-radius: 10px;
+        }
+
+        .passArea:focus-within {
+            background-color: #f5f5f5;
+            box-shadow: inset 0px 0px 5px 0px rgba(42, 42, 42, 0.75);
+        }
+
+        #okay {
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 36px;
+            background-color: #1c1c1c;
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .eye {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            background: #ccc;
+            box-shadow: inset 0 0 8px white;
+        }
+
+        .eye:after {
+            /*pupil*/
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background: black;
+            box-shadow: inset 0 0 5px cyan;
+            border-radius: 50%;
+            content: " ";
+        }
+
+        .eyeDown {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            background: #ccc;
+            box-shadow: inset 0 0 8px white;
+        }
+
+        .eyeDown:after {
+            /*pupil*/
+            position: absolute;
+            bottom: 3px;
+            left: var(--left);
+            width: 10px;
+            height: 10px;
+            background: black;
+            box-shadow: inset 0 0 5px cyan;
+            border-radius: 50%;
+            content: " ";
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Register Form</h2>
+        <br>
+
+        <div class='.container'>
+            <div id="lefteye" class='eye'></div>
+            <div id="righteye" class='eye'></div>
+        </div>
+
+        <ul>
+            <div class="passArea" id="passArea"><input type="password" placeholder="Your Password" id="pass"
+                    onkeyup="checkPass(); followMe();" onfocus="lookAt();" onfocusout="dontLook();" class="pass"
+                    autocomplete="off"><button id="show" class="show" onmousedown="show();"
+                    onmouseup="hide();">👁</button></div>
+            <p class="waiting" id="upper">At Least 1 Uppercase</p>
+            <p id="chkUpper" class="check">0</p>
+            <p class="waiting" id="special">At Least 1 Special Character</p>
+            <p id="chkSpecial" class="check">0</p>
+            <p class="waiting" id="num">At Least 1 Number</p>
+            <p id="chkNum" class="check">0</p>
+            <p class="waiting" id="long">At Least 8 Characters Long</p>
+            <p id="chkLong" class="check">0</p>
+            <br>
+            <button id="okay" onclick="approveChk();">Register</button>
+        </ul>
+    </div>
+
+
+    <script>
+        function show(){
+                document.getElementById("pass").setAttribute('type', 'text');
+            }
+            
+            function hide(){
+                document.getElementById("pass").setAttribute('type', 'password');
+            }
+            
+            function checkPass(){
+                let input = document.getElementById('pass').value;
+                
+                    if(input.length >= 8){
+                        document.getElementById("long").setAttribute('class', 'done');
+                        document.getElementById("chkLong").innerHTML = "1";
+                    } else {
+                        document.getElementById("long").setAttribute('class', 'waiting');
+                        document.getElementById("chkLong").innerHTML = "0";
+                    }
+                    
+                    if(/[A-Z]/.test(input) == true){
+                        document.getElementById("upper").setAttribute('class', 'done');
+                        document.getElementById("chkUpper").innerHTML = "1";
+                    } else {
+                        document.getElementById("upper").setAttribute('class', 'waiting');
+                        document.getElementById("chkUpper").innerHTML = "0";
+                    }
+                    
+                    if(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(input) == true){
+                        document.getElementById("special").setAttribute('class', 'done');
+                        document.getElementById("chkSpecial").innerHTML = "1";
+                    } else {
+                        document.getElementById("special").setAttribute('class', 'waiting');
+                        document.getElementById("chkSpecial").innerHTML = "0";
+                    }
+                    
+                    if(/[0-9]/.test(input) == true){
+                        document.getElementById("num").setAttribute('class', 'done');
+                        document.getElementById("chkNum").innerHTML = "1";
+                    } else {
+                        document.getElementById("num").setAttribute('class', 'waiting');
+                        document.getElementById("chkNum").innerHTML = "0";
+                    }
+                
+            }
+            
+            function approveChk(){
+               let c1 = Number(document.getElementById("chkUpper").innerHTML);
+               let c2 = Number(document.getElementById("chkSpecial").innerHTML);
+               let c3 = Number(document.getElementById("chkNum").innerHTML);
+               let c4 = Number(document.getElementById("chkLong").innerHTML);
+               let cF = (c1 + c2 + c3 + c4);
+               
+               if(cF == 4){
+                   alert("You Successfully Registered");
+               } else {
+                   errorChk();
+               }
+            }
+            
+            function errorChk(){
+                let c1 = Number(document.getElementById("chkUpper").innerHTML);
+                let c2 = Number(document.getElementById("chkSpecial").innerHTML);
+                let c3 = Number(document.getElementById("chkNum").innerHTML);
+                let c4 = Number(document.getElementById("chkLong").innerHTML);
+                
+                
+                
+                if(c1 < 1){
+                    var a1 = "At Least 1 Uppercase \n";
+                } else {
+                    var a1 = "";
+                }
+                if(c2 < 1){
+                    var a2 = "At Least 1 Special Character \n";
+                } else {
+                    var a2 = "";
+                }
+                if(c3 < 1){
+                    var a3 = "At Least One Number \n";
+                } else {
+                    var a3 = "";
+                }
+                if(c4 < 1){
+                    var a4 = "At Least 8 Character Long \n";
+                } else {
+                    var a4 = "";
+                }
+                
+                let metin = a1 + a2 + a3 + a4;
+                
+                alert(metin);
+                
+                
+                
+            }
+            
+            function lookAt(){
+                document.getElementById("lefteye").setAttribute("class", "eyeDown");
+                document.getElementById("righteye").setAttribute("class", "eyeDown");
+            }
+            
+            function dontLook(){
+                document.getElementById("lefteye").setAttribute("class", "eye");
+                document.getElementById("righteye").setAttribute("class", "eye");
+            }
+            
+            function followMe(){
+                let input = document.getElementById('pass').value;
+                let len = input.length;
+                let amount = len * 2;
+                if(amount > 20){
+                    amount = 20;
+                } else {
+                    
+                }
+                
+                const eye1 = document.getElementById("lefteye");
+                const eye2 = document.getElementById("righteye");
+                eye1.style.setProperty('--left', amount);
+                eye2.style.setProperty('--left', amount);
+                
+            
+            }
+            
+    </script>
+</body>
+
+</html>
