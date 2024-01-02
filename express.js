@@ -18,15 +18,15 @@ var app = require("express")();
 
 app.set("view engine","ejs");
 
-app.use((req, res, next) => {
-    console.log("hello from middleware");
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log("hello from middleware");
+//     next();
+// });
 
-app.use((req, res, next) => {
-    console.log("hello from middleware 2");
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log("hello from middleware 2");
+//     next();
+// });
 
 app.get("/", function (req, res) {
     res.render("index");
@@ -38,7 +38,11 @@ app.get("/contact", function (req, res) {
 
 app.get("/profile/:user", function (req, res) {
     //colon ke baad vale ko params kehte ha like here it is user
-    res.send(`hello from ${req.params.user} `);
+    // res.send(`hello from ${req.params.user} `);
+
+    res.sendFile("C:/Users/HP/Desktop/practise/express_practise/practise/myfile.txt");
+
 });
+
 
 app.listen(5000);

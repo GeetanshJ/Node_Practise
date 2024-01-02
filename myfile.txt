@@ -1,1 +1,1 @@
-hello 
+res.send(${req.params.user})
